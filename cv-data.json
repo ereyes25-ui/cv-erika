@@ -1,0 +1,123 @@
+{
+  "theme": {
+    "background": "#05070D",
+    "sidebarBackground": "#0A0E18",
+    "primaryColor": "#5B5FFF",
+    "secondaryColor": "#8B5CF6",
+    "textPrimary": "#FFFFFF",
+    "textSecondary": "#C5C7D0",
+    "borderColor": "#232838",
+    "fontFamily": "Poppins"
+  },
+  "personal": {
+    "firstName": "ERIKA ADAI",
+    "lastName": "REYES HERRERA",
+    "title": "Estudiante de Ingeniería en Sistemas Computacionales",
+    "photo": "img/profile.jpg",
+    "specialties": [
+      "Desarrollo de Productos Digitales",
+      "Diseño de Interfaces",
+      "Soluciones Web"
+    ]
+  },
+  "contact": {
+    "phone": "+52 276 116 24 82",
+    "email": "e.reyes.251203@gmail.com",
+    "github": "github.com/ereyes25-ui",
+    "linkedin": "linkedin.com/in/erika-reyes-ui",
+    "location": "Libres, Puebla, MX"
+  },
+  "technologies": {
+    "Frontend": ["HTML5", "CSS3", "JavaScript (ES6+)"],
+    "Backend / Lenguajes": ["Kotlin", "SQL"],
+    "Bases de Datos": ["MySQL", "SQL Server"],
+    "Control de Versiones": ["Git", "GitHub"]
+  },
+  "tools": [
+    { "name": "VS Code", "icon": "vscode" },
+    { "name": "Android Studio", "icon": "android" },
+    { "name": "NetBeans", "icon": "netbeans" },
+    { "name": "Cisco Packet Tracer", "icon": "cisco" },
+    { "name": "Canva", "icon": "canva" },
+    { "name": "Notion", "icon": "notion" },
+    { "name": "Excel", "icon": "excel" }
+  ],
+  "skills": [
+    "Diseño de interfaces",
+    "Análisis de requerimientos",
+    "Pensamiento analítico",
+    "Trabajo en equipo / Scrum",
+    "Documentación técnica",
+    "Atención a usuarios"
+  ],
+  "languages": [
+    { "name": "Español", "level": "Nativo", "dots": 6 },
+    { "name": "Inglés", "level": "A2 (en progreso)", "dots": 2 }
+  ],
+  "profile": "Estudiante de Ingeniería en Sistemas Computacionales con interés en el desarrollo de productos digitales que combinen diseño, funcionalidad y una experiencia intuitiva para resolver problemas reales. Analizo necesidades, diseño la solución y la convierto en algo que funcione bien y se vea bien. Actualmente desarrollo una plataforma web aplicada a un negocio real, fortaleciendo habilidades en desarrollo frontend, bases de datos y arquitectura de aplicaciones web.",
+  "experience": [
+    {
+      "position": "Soporte Operativo & Digitalización",
+      "company": "Negocio familiar — Servicios de Internet",
+      "period": "2019 – Presente",
+      "items": [
+        "Centralicé la gestión de clientes y pagos en un sistema digital, eliminando el uso de registros en papel.",
+        "Brindé atención y soporte técnico a clientes, resolviendo incidencias y dando seguimiento a solicitudes.",
+        "Colaboré en instalaciones de redes y fibra óptica, fortaleciendo conocimientos técnicos en campo.",
+        "Identifiqué ineficiencias en los procesos administrativos, lo que motivó el desarrollo de una plataforma de gestión propia."
+      ]
+    },
+    {
+      "position": "Atención al Cliente — Entorno Dinámico",
+      "company": "Restaurante Japomex",
+      "period": "2023",
+      "items": [
+        "Gestioné pedidos digitales vía WhatsApp, manteniendo eficiencia y precisión bajo presión de tiempo.",
+        "Colaboré en la coordinación operativa, adaptándome a flujos de trabajo cambiantes."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "featured": true,
+      "name": "Desarrollo de Plataforma de Gestión para Negocios",
+      "subtitle": "Proyecto Personal — En desarrollo",
+      "period": "Presente",
+      "description": "Desarrollo una solución web para gestión de clientes, pagos y servicios aplicada a un negocio real.",
+      "badges": ["Gestión de clientes", "Pagos", "Reportes", "Notificaciones API"],
+      "items": [
+        "Diseño una interfaz enfocada en simplicidad, facilidad de uso y experiencia del usuario.",
+        "Implemento una base de datos relacional (MySQL) para administrar clientes, adeudos y reportes.",
+        "Gestiono el control de versiones del proyecto mediante Git y GitHub; desarrollo la base para notificaciones automáticas vía API.",
+        "Diseñada con arquitectura escalable para facilitar su adaptación a distintos tipos de negocio."
+      ]
+    },
+    {
+      "featured": false,
+      "name": "Proyectos Académicos — ISC",
+      "subtitle": "ITSL — Proyectos Integradores",
+      "period": "2022-2026",
+      "items": [
+        "Desarrollé aplicaciones web y móviles mediante tecnologías como HTML, CSS, JavaScript y Kotlin; además realicé prácticas de modelado de redes con Cisco Packet Tracer y exploración de herramientas como Blender y Unity.",
+        "Colaboré en diseño frontend y documentación técnica en proyectos universitarios."
+      ]
+    }
+  ],
+  "learning": [
+    "Excel Intermedio (certificado)",
+    "IA aplicada al desarrollo de software (autodidacta)",
+    "Desarrollo web y buenas prácticas (autodidacta)"
+  ],
+  "interests": [
+    "Desarrollo de Productos Digitales",
+    "Desarrollo Web",
+    "Diseño de Interfaces",
+    "Inteligencia Artificial",
+    "Automatización"
+  ],
+  "education": {
+    "degree": "Ing. en Sistemas Computacionales",
+    "institution": "ITSL — Inst. Tec. Superior de Libres",
+    "extra": "8vo semestre · Grad. est. 2027"
+  }
+}

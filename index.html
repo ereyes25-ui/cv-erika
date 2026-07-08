@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CV — Erika Adai Reyes Herrera</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- Librerías para exportar el CV a PDF como imagen -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- Botón flotante de descarga (no se imprime / no aparece en el PDF) -->
+  <button id="btn-download-pdf" class="btn-download-pdf" onclick="downloadCVAsPDF()">
+    Descargar PDF
+  </button>
+
+  <!-- ===================== WRAPPER A4 ===================== -->
+  <div class="page-wrapper">
+    <div class="cv-root" id="cv-root">
+
+      <!-- ===== LEFT SIDEBAR ===== -->
+      <aside class="sidebar" id="sidebar">
+
+        <!-- Photo -->
+        <div class="photo-wrap">
+          <div class="photo-ring">
+            <img src="img/profile.jpg" alt="Foto de perfil" class="photo" id="photo" onerror="this.src='img/placeholder.svg'" />
+          </div>
+        </div>
+
+        <!-- Contact -->
+        <section class="sb-section" id="sb-contact"></section>
+
+        <!-- Technologies -->
+        <section class="sb-section" id="sb-tech"></section>
+
+        <!-- Tools -->
+        <section class="sb-section" id="sb-tools"></section>
+
+        <!-- Skills -->
+        <section class="sb-section" id="sb-skills"></section>
+
+        <!-- Languages -->
+        <section class="sb-section" id="sb-languages"></section>
+
+      </aside>
+
+      <!-- ===== RIGHT CONTENT ===== -->
+      <main class="content" id="content">
+
+        <!-- Header / Name block -->
+        <header class="cv-header" id="cv-header"></header>
+
+        <!-- Professional Profile -->
+        <section class="cv-section" id="cv-profile"></section>
+
+        <!-- Experience -->
+        <section class="cv-section" id="cv-experience"></section>
+
+        <!-- Projects -->
+        <section class="cv-section" id="cv-projects"></section>
+
+        <!-- Bottom row: Learning + Interests -->
+        <div class="cv-bottom-row">
+          <section class="cv-section cv-bottom-half" id="cv-learning"></section>
+          <section class="cv-section cv-bottom-half" id="cv-interests"></section>
+        </div>
+
+        <!-- Education -->
+        <section class="cv-section" id="cv-education"></section>
+
+      </main>
+
+    </div><!-- /.cv-root -->
+  </div><!-- /.page-wrapper -->
+
+  <script src="js/app.js"></script>
+  <script>
+    async function downloadCVAsPDF() {
+      const btn = document.getElementById('btn-download-pdf');
+      const target = document.getElementById('cv-root');
+      const originalLabel = btn.textContent;
+
+      btn.disabled = true;
+      btn.textContent = 'Generando...';
+
+      try {
+        // Captura el nodo tal cual se ve en pantalla (respeta fondos, sombras, flexbox, etc.)
+        const canvas = await html2canvas(target, {
+          scale: 3,                 // resolución alta para que no se vea pixelado
+          useCORS: true,            // permite imágenes externas (fuentes, foto de perfil)
+          backgroundColor: '#05070D',
+          windowWidth: target.scrollWidth,
+          windowHeight: target.scrollHeight
+        });
+
+        const imgData = canvas.toDataURL('image/jpeg', 1.0);
+
+        // Tamaño Carta (Letter): sin margen a los lados, con margen arriba/abajo
+        // para que no se vea cortado al imprimir
+        const pdf = new window.jspdf.jsPDF({
+          orientation: 'portrait',
+          unit: 'mm',
+          format: 'letter'
+        });
+
+        const marginX = 0;   // izquierda / derecha
+        const marginY = 10;  // arriba / abajo (1cm)
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+        const usableWidth = pageWidth - marginX * 2;
+        const usableHeight = pageHeight - marginY * 2;
+
+        // Escala la imagen para que aproveche el máximo del área útil (ancho o alto,
+        // lo que se topa primero), sin deformarla ni recortarla.
+        const imgWidthPx = canvas.width;
+        const imgHeightPx = canvas.height;
+
+        const ratio = Math.min(usableWidth / imgWidthPx, usableHeight / imgHeightPx);
+        const imgWidth = imgWidthPx * ratio;
+        const imgHeight = imgHeightPx * ratio;
+
+        const offsetX = marginX + (usableWidth - imgWidth) / 2;
+        const offsetY = marginY + (usableHeight - imgHeight) / 2;
+
+        pdf.addImage(imgData, 'JPEG', offsetX, offsetY, imgWidth, imgHeight);
+
+        // ---- Enlaces clicables ----
+        // La imagen es un pixel plano, así que "pegamos" zonas invisibles encima
+        // en las coordenadas exactas de cada <a href> real dentro del CV.
+        const mmPerPx = imgWidth / target.offsetWidth;
+        const targetRect = target.getBoundingClientRect();
+
+        target.querySelectorAll('a[href]').forEach((linkEl) => {
+          const linkRect = linkEl.getBoundingClientRect();
+          const relX = linkRect.left - targetRect.left;
+          const relY = linkRect.top - targetRect.top;
+
+          const linkX = offsetX + relX * mmPerPx;
+          const linkY = offsetY + relY * mmPerPx;
+          const linkW = linkRect.width * mmPerPx;
+          const linkH = linkRect.height * mmPerPx;
+
+          pdf.link(linkX, linkY, linkW, linkH, { url: linkEl.href });
+        });
+
+        pdf.save('CV-Erika-Reyes.pdf');
+      } catch (err) {
+        console.error('Error generando el PDF:', err);
+        alert('Ocurrió un error al generar el PDF. Revisa la consola.');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = originalLabel;
+      }
+    }
+  </script>
+</body>
+</html>
