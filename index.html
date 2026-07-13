@@ -30,7 +30,7 @@
         <!-- Photo -->
         <div class="photo-wrap">
           <div class="photo-ring">
-            <img src="img/cv.png" alt="Foto de perfil" class="photo" id="photo" onerror="this.src='img/placeholder.svg'" />
+            <img src="img/profile.jpg" alt="Foto de perfil" class="photo" id="photo" onerror="this.src='img/placeholder.svg'" />
           </div>
         </div>
 
@@ -91,13 +91,25 @@
       btn.textContent = 'Generando...';
 
       try {
+        // Verifica que las librerías del CDN sí cargaron antes de continuar
+        if (typeof html2canvas === 'undefined' || typeof window.jspdf === 'undefined') {
+          throw new Error(
+            'No se pudieron cargar las librerías necesarias (html2canvas / jsPDF). ' +
+            'Revisa tu conexión a internet o desactiva bloqueadores de anuncios/rastreadores para este sitio, y recarga la página.'
+          );
+        }
+
         // Captura el nodo tal cual se ve en pantalla (respeta fondos, sombras, flexbox, etc.)
+        // OJO: forzamos un "viewport" ancho (1400px) para que, sin importar si esto se
+        // descarga desde celular o computadora, siempre se capture el layout de escritorio
+        // (2 columnas) y nunca el layout responsivo apilado del @media max-width:840px.
+        const DESKTOP_VIEWPORT = 1400;
         const canvas = await html2canvas(target, {
           scale: 3,                 // resolución alta para que no se vea pixelado
           useCORS: true,            // permite imágenes externas (fuentes, foto de perfil)
           backgroundColor: '#05070D',
-          windowWidth: target.scrollWidth,
-          windowHeight: target.scrollHeight
+          windowWidth: DESKTOP_VIEWPORT,
+          windowHeight: Math.max(target.scrollHeight, 1200)
         });
 
         const imgData = canvas.toDataURL('image/jpeg', 1.0);
@@ -153,7 +165,7 @@
         pdf.save('CV-Erika-Reyes.pdf');
       } catch (err) {
         console.error('Error generando el PDF:', err);
-        alert('Ocurrió un error al generar el PDF. Revisa la consola.');
+        alert('Ocurrió un error al generar el PDF:\n\n' + (err && err.message ? err.message : err));
       } finally {
         btn.disabled = false;
         btn.textContent = originalLabel;
